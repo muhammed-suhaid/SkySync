@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:skysync/Screens/weather_page.dart';
+import 'package:skysync/screens/weather_page.dart';
 
 void main() {
   runApp(const MyApp());
