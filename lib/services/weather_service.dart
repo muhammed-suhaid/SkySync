@@ -7,7 +7,6 @@ import 'package:http/http.dart' as http;
 import 'package:skysync/resources/url_paths.dart';
 
 class WeatherService {
-  // WeatherService(this.apiKey);
   Future<Weather> getWeather(String cityName) async {
     String url =
         '${AppUrl.baseUrl}?q=$cityName&appid=${AppUrl.apiKey}&units=metric';
