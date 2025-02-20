@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skysync/components/my_snackbar.dart';
 import 'package:skysync/models/weather_model.dart';
 import 'package:skysync/services/weather_service.dart';
 
@@ -27,17 +28,21 @@ class _WeatherPageState extends State<WeatherPage> {
         setState(() {
           _weather = weather;
           debugPrint(_weather.toString());
+          MySnackbar.show(context, 'Weather updated successfully!',
+              isError: false);
         });
       } else {
         setState(() {
           _weather = null;
           debugPrint('City not found. Please try again.');
+          MySnackbar.show(context, 'City not found. Please try again.');
         });
       }
     } catch (e) {
       setState(() {
         _weather = null;
         debugPrint('Something went wrong. Please try again.');
+        MySnackbar.show(context, 'Something went wrong. Please try again.');
       });
     }
   }
