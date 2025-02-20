@@ -7,15 +7,16 @@ import 'package:http/http.dart' as http;
 import 'package:skysync/resources/url_paths.dart';
 
 class WeatherService {
-  Future<Weather> getWeather(String cityName) async {
+  Future<Weather?> getWeather(String cityName) async {
     String url =
         '${AppUrl.baseUrl}?q=$cityName&appid=${AppUrl.apiKey}&units=metric';
     final response = await http.get(Uri.parse(url));
+    final data = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      return Weather.fromJson(jsonDecode(response.body));
+      return Weather.fromJson(data);
     } else {
-      throw Exception('Failed to load weather data');
+      return null;
     }
   }
 

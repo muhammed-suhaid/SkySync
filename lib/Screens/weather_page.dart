@@ -10,24 +10,35 @@ class WeatherPage extends StatefulWidget {
 }
 
 class _WeatherPageState extends State<WeatherPage> {
-
-  final _weatherService=WeatherService();
+  final _weatherService = WeatherService();
   Weather? _weather;
 
-  //fetch weather
-  _fetchWeather() async{
-    //get the current city
-    String cityName=await _weatherService.getCurrentCity();
+  // Fetch weather
+  Future<void> _fetchWeather() async {
+    try {
+      // Get the current city
+      String cityName = await _weatherService.getCurrentCity();
+      debugPrint(cityName);
 
-    //get weather for city
-    try{
-      final weather=await _weatherService.getWeather(cityName);
+      // Get weather for city
+      final weather = await _weatherService.getWeather(cityName);
+
+      if (weather != null) {
+        setState(() {
+          _weather = weather;
+          debugPrint(_weather.toString());
+        });
+      } else {
+        setState(() {
+          _weather = null;
+          debugPrint('City not found. Please try again.');
+        });
+      }
+    } catch (e) {
       setState(() {
-        _weather=weather;
+        _weather = null;
+        debugPrint('Something went wrong. Please try again.');
       });
-      debugPrint(_weather.toString());
-    }catch(e){
-      debugPrint(e.toString());
     }
   }
 
@@ -39,6 +50,31 @@ class _WeatherPageState extends State<WeatherPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: RefreshIndicator(
+        onRefresh: _fetchWeather,
+        child: ListView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          children: [
+            SizedBox(height: MediaQuery.of(context).size.height * 0.4),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    _weather?.cityName ?? 'Loading city...',
+                  ),
+                  const SizedBox(height: 10),
+                  Text(
+                    _weather?.temperature.toString() ??
+                        'Loading temperature...',
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
