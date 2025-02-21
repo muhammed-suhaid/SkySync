@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skysync/components/status_card.dart';
 import 'package:skysync/components/my_snackbar.dart';
 import 'package:skysync/components/weather_card.dart.dart';
 import 'package:skysync/models/weather_model.dart';
@@ -62,18 +63,18 @@ class _WeatherPageState extends State<WeatherPage> {
         child: ListView(
           physics: const AlwaysScrollableScrollPhysics(),
           children: [
-           // SizedBox(height: MediaQuery.of(context).size.height * 0.4),
+            // SizedBox(height: MediaQuery.of(context).size.height * 0.4),
             Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 const WeatherCard(),
+                const StatusCard(),
                 Text(
                   _weather?.cityName ?? 'Loading city...',
                 ),
                 const SizedBox(height: 10),
                 Text(
-                  _weather?.temperature.toString() ??
-                      'Loading temperature...',
+                  _weather?.temperature.toString() ?? 'Loading temperature...',
                 ),
               ],
             ),
