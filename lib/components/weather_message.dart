@@ -15,7 +15,7 @@ class WeatherMessage extends StatelessWidget {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.bold,
-              color: Colors.black87,
+              color: Colors.white,
             ),
           ),
           SizedBox(height: 15),
@@ -24,7 +24,7 @@ class WeatherMessage extends StatelessWidget {
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
-              color: Colors.black54,
+              color: Colors.white,
             ),
           ),
         ],

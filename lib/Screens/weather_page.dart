@@ -29,7 +29,8 @@ class _WeatherPageState extends State<WeatherPage> {
         setState(() {
           _weather = weather;
           debugPrint(_weather.toString());
-          MySnackbar.show(context, 'Weather updated successfully!', isError: false);
+          MySnackbar.show(context, 'Weather updated successfully!',
+              isError: false);
         });
       } else {
         setState(() {
@@ -71,19 +72,30 @@ class _WeatherPageState extends State<WeatherPage> {
               physics: const AlwaysScrollableScrollPhysics(),
               children: [
                 Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const WeatherCard(),
                     const StatusCard(),
                     const WeatherMessage(),
                     Text(
                       _weather?.cityName ?? 'Loading city...',
-                      style: const TextStyle(color: Colors.white),
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      _weather?.temperature.toString() ?? 'Loading temperature...',
-                      style: const TextStyle(color: Colors.white),
+                      _weather?.temperature.toString() ??
+                          'Loading temperature...',
+                      style: const TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    const SizedBox(height: 20),
+                    const Text(
+                      "Version 1.0.1",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
                     ),
                   ],
                 ),
