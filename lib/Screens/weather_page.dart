@@ -20,19 +20,16 @@ class _WeatherPageState extends State<WeatherPage> {
   // Fetch weather
   Future<void> _fetchWeather() async {
     try {
-      // Get the current city
       String cityName = await _weatherService.getCurrentCity();
       debugPrint(cityName);
 
-      // Get weather for city
       final weather = await _weatherService.getWeather(cityName);
 
       if (weather != null) {
         setState(() {
           _weather = weather;
           debugPrint(_weather.toString());
-          MySnackbar.show(context, 'Weather updated successfully!',
-              isError: false);
+          MySnackbar.show(context, 'Weather updated successfully!', isError: false);
         });
       } else {
         setState(() {
@@ -59,29 +56,41 @@ class _WeatherPageState extends State<WeatherPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: RefreshIndicator(
-        onRefresh: _fetchWeather,
-        child: ListView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          children: [
-            // SizedBox(height: MediaQuery.of(context).size.height * 0.4),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.start,
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/Sunny.png',
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+            ),
+          ),
+          RefreshIndicator(
+            onRefresh: _fetchWeather,
+            child: ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
               children: [
-                const WeatherCard(),
-                const StatusCard(),
-                const WeatherMessage(),
-                Text(
-                  _weather?.cityName ?? 'Loading city...',
-                ),
-                const SizedBox(height: 10),
-                Text(
-                  _weather?.temperature.toString() ?? 'Loading temperature...',
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    const WeatherCard(),
+                    const StatusCard(),
+                    const WeatherMessage(),
+                    Text(
+                      _weather?.cityName ?? 'Loading city...',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                    const SizedBox(height: 10),
+                    Text(
+                      _weather?.temperature.toString() ?? 'Loading temperature...',
+                      style: const TextStyle(color: Colors.white),
+                    ),
+                  ],
                 ),
               ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
