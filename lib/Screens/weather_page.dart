@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:skysync/components/status_card.dart';
 import 'package:skysync/components/my_snackbar.dart';
 import 'package:skysync/components/weather_card.dart.dart';
+import 'package:skysync/components/weather_message.dart';
 import 'package:skysync/models/weather_model.dart';
 import 'package:skysync/services/weather_service.dart';
 
@@ -69,6 +70,7 @@ class _WeatherPageState extends State<WeatherPage> {
               children: [
                 const WeatherCard(),
                 const StatusCard(),
+                const WeatherMessage(),
                 Text(
                   _weather?.cityName ?? 'Loading city...',
                 ),
