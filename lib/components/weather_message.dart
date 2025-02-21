@@ -20,7 +20,7 @@ class WeatherMessage extends StatelessWidget {
           ),
           SizedBox(height: 15),
           Text(
-            "The weather is just right—warm, but not too hot! ☀️ It's a good time to head outdoors, whether for a walk in the park or a casual outing. If you're out in the sun, wear sunscreen and stay hydrated to keep yourself refreshed.",
+            "The weather in Angamaly is currently misty with a temperature of 27.9°C, though it feels like 31°C. The air is quite humid at 74%, and visibility is slightly reduced to 4km. A gentle breeze is blowing at 1.03 m/s. It's a warm and slightly foggy day—stay hydrated and drive safely if you're heading out!",
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
