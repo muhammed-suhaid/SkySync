@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:skysync/resources/color_manager.dart';
 
 class WeatherCard extends StatelessWidget {
   const WeatherCard({super.key});
@@ -10,7 +11,7 @@ class WeatherCard extends StatelessWidget {
       margin: const EdgeInsets.all(50),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: const Color(0xFFFAE2BD),
+        color:  ColorManager.sunny,
         borderRadius: BorderRadius.circular(25),
       ),
       child: const Column(
@@ -19,7 +20,7 @@ class WeatherCard extends StatelessWidget {
           Text(
             'SkySync',
             style: TextStyle(
-              color: Color(0xFFEFAA82),
+              color: ColorManager.sunnytxt,
               fontSize: 22,
               fontWeight: FontWeight.w500,
             ),
@@ -30,7 +31,7 @@ class WeatherCard extends StatelessWidget {
             children: [
               Icon(
                 Icons.wb_sunny,
-                color: Color(0xFFEFAA82),
+                color: ColorManager.sunnytxt,
                 size: 50,
               ),
               SizedBox(width: 10),
@@ -39,7 +40,7 @@ class WeatherCard extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 100,
                   fontWeight: FontWeight.w500,
-                  color: Color(0xFFEFAA82),
+                  color: ColorManager.sunnytxt,
                 ),
               ),
             ],
@@ -47,7 +48,7 @@ class WeatherCard extends StatelessWidget {
           Text(
             'Sunny',
             style: TextStyle(
-              color: Color(0xFFEFAA82),
+              color: ColorManager.sunnytxt,
               fontSize: 20,
               fontWeight: FontWeight.w500,
             ),
@@ -56,7 +57,7 @@ class WeatherCard extends StatelessWidget {
           Text(
             'Angamaly, Ernakulam',
             style: TextStyle(
-              color: Color(0xFFEFAA82),
+              color: ColorManager.sunnytxt,
               fontSize: 14,
             ),
           ),
@@ -64,7 +65,7 @@ class WeatherCard extends StatelessWidget {
           Text(
             '21 Feb 2025',
             style: TextStyle(
-              color: Color(0xFFEFAA82),
+              color: ColorManager.sunnytxt,
               fontSize: 14,
             ),
           ),
@@ -72,7 +73,7 @@ class WeatherCard extends StatelessWidget {
           Text(
             'Feels like 30 | Sunset 18:20',
             style: TextStyle(
-              color: Color(0xFFEFAA82),
+              color: ColorManager.sunnytxt,
               fontSize: 14,
             ),
           ),
