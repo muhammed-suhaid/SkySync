@@ -1,9 +1,15 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:skysync/models/weather_model.dart';
 
 class StatusCard extends StatelessWidget {
-  const StatusCard({super.key});
+  final Weather? weather;
+
+  const StatusCard({
+    super.key,
+    required this.weather,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -21,25 +27,25 @@ class StatusCard extends StatelessWidget {
               color: const Color.fromARGB(91, 187, 167, 140),
               borderRadius: BorderRadius.circular(25),
             ),
-            child: const Row(
+            child:  Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.water_drop_rounded,
                       color: Colors.white,
                       size: 40,
                     ),
                     Text(
-                      "86%",
-                      style: TextStyle(
+                     "${weather?.humidity??'--'}%",
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                       ),
                     ),
-                    Text(
+                    const Text(
                       "Humidity",
                       style: TextStyle(
                         color: Colors.white,
@@ -51,19 +57,19 @@ class StatusCard extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.air_rounded,
                       color: Colors.white,
                       size: 40,
                     ),
                     Text(
-                      "3 km/h",
-                      style: TextStyle(
+                      " ${weather?.windSpeed??'--'} km/h" ,
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                       ),
                     ),
-                    Text(
+                    const Text(
                       "Wind Speed",
                       style: TextStyle(
                         color: Colors.white,
@@ -75,19 +81,19 @@ class StatusCard extends StatelessWidget {
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(
+                    const Icon(
                       Icons.sunny,
                       color: Colors.white,
                       size: 40,
                     ),
                     Text(
-                      "25/28",
-                      style: TextStyle(
+                      "${weather?.tempMax??'--'}°/${weather?.tempMin??'--'}°",
+                      style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
                       ),
                     ),
-                    Text(
+                    const Text(
                       "High/Low",
                       style: TextStyle(
                         color: Colors.white,

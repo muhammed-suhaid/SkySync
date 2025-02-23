@@ -93,7 +93,7 @@ class _WeatherPageState extends State<WeatherPage> {
                       weather: _weather,
                       stateName: _stateName,
                     ),
-                    const StatusCard(),
+                    StatusCard(weather: _weather),
                     const WeatherMessage(),
                   ],
                 ),

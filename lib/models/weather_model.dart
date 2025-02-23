@@ -7,8 +7,8 @@ class Weather {
   final String sunset;
   final int humidity;
   final double windSpeed;
-  final double tempMax;
-  final double tempMin;
+  final int tempMax;
+  final int tempMin;
 
   Weather({
     required this.cityName,
@@ -33,8 +33,8 @@ class Weather {
       sunset: _formatDate(json['sys']['sunset']),
       humidity: json['main']['humidity'],
       windSpeed: json['wind']['speed'].toDouble(),
-      tempMax: json['main']['temp_max'].toDouble(),
-      tempMin: json['main']['temp_min'].toDouble(),
+      tempMax: json['main']['temp_max'].toDouble().toInt(),
+      tempMin: json['main']['temp_min'].toDouble().toInt(),
     );
   }
 
