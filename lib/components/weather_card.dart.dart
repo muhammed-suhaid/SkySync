@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:skysync/models/weather_model.dart';
 import 'package:skysync/resources/color_manager.dart';
 
 class WeatherCard extends StatelessWidget {
-  const WeatherCard({super.key});
+  final Weather? weather;
+  final String? stateName;
+
+  const WeatherCard({
+    super.key,
+    required this.weather,
+    required this.stateName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -11,13 +20,13 @@ class WeatherCard extends StatelessWidget {
       margin: const EdgeInsets.all(50),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color:  ColorManager.sunny,
+        color: ColorManager.sunny,
         borderRadius: BorderRadius.circular(25),
       ),
-      child: const Column(
+      child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          Text(
+          const Text(
             'SkySync',
             style: TextStyle(
               color: ColorManager.sunnytxt,
@@ -25,19 +34,19 @@ class WeatherCard extends StatelessWidget {
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(
+              const Icon(
                 Icons.wb_sunny,
                 color: ColorManager.sunnytxt,
                 size: 50,
               ),
-              SizedBox(width: 10),
+              const SizedBox(width: 10),
               Text(
-                '32°',
-                style: TextStyle(
+                '${weather?.temperature ?? '--'}°',
+                style: const TextStyle(
                   fontSize: 100,
                   fontWeight: FontWeight.w500,
                   color: ColorManager.sunnytxt,
@@ -46,33 +55,33 @@ class WeatherCard extends StatelessWidget {
             ],
           ),
           Text(
-            'Sunny',
-            style: TextStyle(
+            weather?.mainCondition ?? '',
+            style: const TextStyle(
               color: ColorManager.sunnytxt,
               fontSize: 20,
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Text(
-            'Angamaly, Ernakulam',
-            style: TextStyle(
+            '${weather?.cityName ?? '--'}, ${stateName ?? '--'}',
+            style: const TextStyle(
               color: ColorManager.sunnytxt,
               fontSize: 14,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
-            '21 Feb 2025',
-            style: TextStyle(
+            formatDate(weather?.date),
+            style: const TextStyle(
               color: ColorManager.sunnytxt,
               fontSize: 14,
             ),
           ),
-          SizedBox(height: 10),
+          const SizedBox(height: 10),
           Text(
-            'Feels like 30 | Sunset 18:20',
-            style: TextStyle(
+            'Feels like ${weather?.feelsLike ?? '--'}° | Sunset ${formatTime(weather?.sunset)}',
+            style: const TextStyle(
               color: ColorManager.sunnytxt,
               fontSize: 14,
             ),
@@ -80,5 +89,23 @@ class WeatherCard extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  // Method to convert timestamp to "dd mmm yyyy" format
+  String formatDate(String? dateString) {
+    if (dateString != null) {
+      DateTime dateTime = DateTime.parse(dateString);
+      return DateFormat("d MMM yyyy").format(dateTime);
+    }
+    return '--';
+  }
+
+  // Method to convert timestamp to 24-hr format
+  String formatTime(String? dateString) {
+    if (dateString != null) {
+      DateTime dateTime = DateTime.parse(dateString);
+      return DateFormat("HH:mm").format(dateTime);
+    }
+    return '--';
   }
 }

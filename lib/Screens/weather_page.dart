@@ -18,21 +18,23 @@ class WeatherPage extends StatefulWidget {
 class _WeatherPageState extends State<WeatherPage> {
   final _weatherService = WeatherService();
   Weather? _weather;
+  String? _stateName;
 
   // Fetch weather
   Future<void> _fetchWeather() async {
     try {
       List<Placemark> placemark = await _weatherService.getCurrentPlacemark();
-      String? cityName=placemark[1].locality;
-      String? stateName=placemark[1].administrativeArea;
+      String? cityName = placemark[1].locality;
+      String? stateName = placemark[1].administrativeArea;
       debugPrint("City = $cityName");
       debugPrint("State = $stateName");
 
-      final weather = await _weatherService.getWeather(cityName??'');
+      final weather = await _weatherService.getWeather(cityName ?? '');
 
       if (weather != null) {
         setState(() {
           _weather = weather;
+          _stateName=stateName;
           debugPrint(_weather.toString());
           MySnackbar.show(context, 'Weather updated successfully!',
               isError: false);
@@ -87,30 +89,12 @@ class _WeatherPageState extends State<WeatherPage> {
               children: [
                 Column(
                   children: [
-                    const WeatherCard(),
+                    WeatherCard(
+                      weather: _weather,
+                      stateName: _stateName,
+                    ),
                     const StatusCard(),
                     const WeatherMessage(),
-                    Text(
-                      _weather?.cityName ?? 'Loading city...',
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Text(
-                      _weather?.temperature.toString() ??
-                          'Loading temperature...',
-                      style: const TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    const Text(
-                      "Version 1.0.1",
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                    ),
                   ],
                 ),
               ],
