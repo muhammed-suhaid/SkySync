@@ -19,7 +19,7 @@ class _WeatherPageState extends State<WeatherPage> {
   final _weatherService = WeatherService();
   Weather? _weather;
   String? _stateName;
-  String? _climate;
+  String? _weatherName;
 
   @override
   void initState() {
@@ -34,7 +34,7 @@ class _WeatherPageState extends State<WeatherPage> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              getBackgroundImage(_climate),
+              getBackgroundImage(_weatherName),
               fit: BoxFit.cover,
               alignment: Alignment.center,
             ),
@@ -49,6 +49,7 @@ class _WeatherPageState extends State<WeatherPage> {
                     WeatherCard(
                       weather: _weather,
                       stateName: _stateName,
+                      weatherName: _weatherName,
                     ),
                     StatusCard(weather: _weather),
                     WeatherMessage(weather: _weather),
@@ -62,8 +63,8 @@ class _WeatherPageState extends State<WeatherPage> {
     );
   }
 
-  String getBackgroundImage(String? climate) {
-    switch (climate) {
+  String getBackgroundImage(String? weatherName) {
+    switch (weatherName) {
       case 'sunny':
         return ImageAssets.sunny;
       case 'cloudy':
@@ -77,9 +78,9 @@ class _WeatherPageState extends State<WeatherPage> {
     }
   }
 
-// method for getting the climate based on the main condition
-  String getClimate(String? mainCondition) {
-    String climate = 'cloudy';
+// method for getting the Weather Name based on the main condition
+  String getWeatherName(String? mainCondition) {
+    String weatherName = 'cloudy';
     if (mainCondition != null) {
       switch (mainCondition.toLowerCase()) {
         case 'clear':
@@ -106,7 +107,7 @@ class _WeatherPageState extends State<WeatherPage> {
           return 'cloudy';
       }
     }
-    return climate;
+    return weatherName;
   }
 
   // Fetch weather
@@ -119,14 +120,14 @@ class _WeatherPageState extends State<WeatherPage> {
       debugPrint("State = $stateName");
 
       final weather = await _weatherService.getWeather(cityName ?? '');
-      final climate = getClimate(weather?.mainCondition);
-      debugPrint("Climate = $climate");
+      final weatherName = getWeatherName(weather?.mainCondition);
+      debugPrint("weatherName = $weatherName");
 
       if (weather != null) {
         setState(() {
           _weather = weather;
           _stateName = stateName;
-          _climate = climate;
+          _weatherName = weatherName;
           debugPrint(_weather.toString());
           MySnackbar.show(context, 'Weather updated successfully!',
               isError: false);

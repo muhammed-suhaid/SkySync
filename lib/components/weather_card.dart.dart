@@ -6,11 +6,13 @@ import 'package:skysync/resources/color_manager.dart';
 class WeatherCard extends StatelessWidget {
   final Weather? weather;
   final String? stateName;
+  final String? weatherName;
 
   const WeatherCard({
     super.key,
     required this.weather,
     required this.stateName,
+    required this.weatherName,
   });
 
   @override
@@ -20,16 +22,16 @@ class WeatherCard extends StatelessWidget {
       margin: const EdgeInsets.all(50),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: ColorManager.sunny,
+        color: getContainerColor(weatherName),
         borderRadius: BorderRadius.circular(25),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Text(
+          Text(
             'SkySync',
             style: TextStyle(
-              color: ColorManager.sunnytxt,
+              color: getTextColor(weatherName),
               fontSize: 22,
               fontWeight: FontWeight.w500,
             ),
@@ -38,26 +40,26 @@ class WeatherCard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(
+              Icon(
                 Icons.wb_sunny,
-                color: ColorManager.sunnytxt,
+                color: getTextColor(weatherName),
                 size: 50,
               ),
               const SizedBox(width: 10),
               Text(
                 '${weather?.temperature ?? '--'}°',
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 100,
                   fontWeight: FontWeight.w500,
-                  color: ColorManager.sunnytxt,
+                  color: getTextColor(weatherName),
                 ),
               ),
             ],
           ),
           Text(
             weather?.mainCondition ?? '',
-            style: const TextStyle(
-              color: ColorManager.sunnytxt,
+            style: TextStyle(
+              color: getTextColor(weatherName),
               fontSize: 20,
               fontWeight: FontWeight.w500,
             ),
@@ -65,24 +67,24 @@ class WeatherCard extends StatelessWidget {
           const SizedBox(height: 20),
           Text(
             '${weather?.cityName ?? '--'}, ${stateName ?? '--'}',
-            style: const TextStyle(
-              color: ColorManager.sunnytxt,
+            style: TextStyle(
+              color: getTextColor(weatherName),
               fontSize: 14,
             ),
           ),
           const SizedBox(height: 10),
           Text(
             formatDate(weather?.date),
-            style: const TextStyle(
-              color: ColorManager.sunnytxt,
+            style: TextStyle(
+              color: getTextColor(weatherName),
               fontSize: 14,
             ),
           ),
           const SizedBox(height: 10),
           Text(
             'Feels like ${weather?.feelsLike ?? '--'}° | Sunset ${formatTime(weather?.sunset)}',
-            style: const TextStyle(
-              color: ColorManager.sunnytxt,
+            style: TextStyle(
+              color: getTextColor(weatherName),
               fontSize: 14,
             ),
           ),
@@ -107,5 +109,37 @@ class WeatherCard extends StatelessWidget {
       return DateFormat("HH:mm").format(dateTime);
     }
     return '--';
+  }
+
+  //Method to change the Container color based on the Weather Name
+  Color getContainerColor(String? weatherName) {
+    switch (weatherName) {
+      case 'sunny':
+        return ColorManager.sunny;
+      case 'cloudy':
+        return ColorManager.cloudy;
+      case 'rainy':
+        return ColorManager.rainy;
+      case 'snowy':
+        return ColorManager.snowy;
+      default:
+        return ColorManager.cloudy;
+    }
+  }
+
+  //Method to change the text color based on the Weather Name
+  Color getTextColor(String? weatherName) {
+    switch (weatherName) {
+      case 'sunny':
+        return ColorManager.sunnytxt;
+      case 'cloudy':
+        return ColorManager.cloudytxt;
+      case 'rainy':
+        return ColorManager.rainytxt;
+      case 'snowy':
+        return ColorManager.snowytxt;
+      default:
+        return ColorManager.cloudytxt;
+    }
   }
 }
