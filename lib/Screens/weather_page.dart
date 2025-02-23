@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:lottie/lottie.dart';
 import 'package:skysync/components/status_card.dart';
 import 'package:skysync/components/my_snackbar.dart';
 import 'package:skysync/components/weather_card.dart.dart';
@@ -20,6 +21,7 @@ class _WeatherPageState extends State<WeatherPage> {
   Weather? _weather;
   String? _stateName;
   String? _weatherName;
+  bool _isLoading = true;
 
   @override
   void initState() {
@@ -32,35 +34,50 @@ class _WeatherPageState extends State<WeatherPage> {
     return Scaffold(
       body: Stack(
         children: [
-          Positioned.fill(
-            child: Image.asset(
-              getBackgroundImage(_weatherName),
-              fit: BoxFit.cover,
-              alignment: Alignment.center,
-            ),
-          ),
-          RefreshIndicator(
-            onRefresh: _fetchWeather,
-            child: ListView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              children: [
-                Column(
-                  children: [
-                    WeatherCard(
-                      weather: _weather,
-                      stateName: _stateName,
-                      weatherName: _weatherName,
-                    ),
-                    StatusCard(
-                      weather: _weather,
-                      weatherName: _weatherName,
-                    ),
-                    WeatherMessage(weather: _weather),
-                  ],
+          if (_isLoading) ...[
+            Positioned.fill(
+              child: Container(
+                color: Colors.black.withOpacity(0.8),
+                child: Center(
+                  child: Lottie.asset(
+                    AnimationAssets.loading,
+                    width: 400,
+                    height: 400,                   
+                  ),
                 ),
-              ],
+              ),
             ),
-          ),
+          ] else ...[
+            Positioned.fill(
+              child: Image.asset(
+                getBackgroundImage(_weatherName),
+                fit: BoxFit.cover,
+                alignment: Alignment.center,
+              ),
+            ),
+            RefreshIndicator(
+              onRefresh: _fetchWeather,
+              child: ListView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: [
+                  Column(
+                    children: [
+                      WeatherCard(
+                        weather: _weather,
+                        stateName: _stateName,
+                        weatherName: _weatherName,
+                      ),
+                      StatusCard(
+                        weather: _weather,
+                        weatherName: _weatherName,
+                      ),
+                      WeatherMessage(weather: _weather),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ]
         ],
       ),
     );
@@ -131,15 +148,17 @@ class _WeatherPageState extends State<WeatherPage> {
           _weather = weather;
           _stateName = stateName;
           _weatherName = weatherName;
+          _isLoading = false;
           debugPrint(_weather.toString());
-          MySnackbar.show(context, 'Weather updated successfully!',
-              isError: false);
+          // MySnackbar.show(context, 'Weather updated successfully!',
+          // isError: false);
         });
       } else {
         setState(() {
           _weather = null;
+          _isLoading = false;
           debugPrint('City not found. Please try again.');
-          MySnackbar.show(context, 'City not found. Please try again.');
+          // MySnackbar.show(context, 'City not found. Please try again.');
         });
       }
     } catch (e) {
