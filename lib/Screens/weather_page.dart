@@ -4,6 +4,7 @@ import 'package:skysync/components/my_snackbar.dart';
 import 'package:skysync/components/weather_card.dart.dart';
 import 'package:skysync/components/weather_message.dart';
 import 'package:skysync/models/weather_model.dart';
+import 'package:skysync/resources/asset_manager.dart';
 import 'package:skysync/services/weather_service.dart';
 
 class WeatherPage extends StatefulWidget {
@@ -61,7 +62,7 @@ class _WeatherPageState extends State<WeatherPage> {
         children: [
           Positioned.fill(
             child: Image.asset(
-              'assets/images/Sunny.png',
+              ImageAssets.sunny,
               fit: BoxFit.cover,
               alignment: Alignment.center,
             ),
