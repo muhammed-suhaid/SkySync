@@ -12,6 +12,6 @@ class ColorManager {
   static const Color rainy = Color(0xFF7FC3AE);
   static const Color rainytxt = Color(0xFFC9E8E0);
 
-  static const Color cloudy = Color(0xFF91B4C6);
-  static const Color cloudytxt = Color(0xFFCAD7DF);
+  static const Color cloudy = Color(0xFF9090AC);
+  static const Color cloudytxt = Color(0xFF484A82);
 }

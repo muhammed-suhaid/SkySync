@@ -2,13 +2,16 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:skysync/models/weather_model.dart';
+import 'package:skysync/resources/color_manager.dart';
 
 class StatusCard extends StatelessWidget {
   final Weather? weather;
+  final String? weatherName;
 
   const StatusCard({
     super.key,
     required this.weather,
+    required this.weatherName,
   });
 
   @override
@@ -24,10 +27,10 @@ class StatusCard extends StatelessWidget {
             // margin: const EdgeInsets.symmetric(horizontal: 50),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(
-              color: const Color.fromARGB(91, 187, 167, 140),
+              color: getContainerColor(weatherName),
               borderRadius: BorderRadius.circular(25),
             ),
-            child:  Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Column(
@@ -39,7 +42,7 @@ class StatusCard extends StatelessWidget {
                       size: 40,
                     ),
                     Text(
-                     "${weather?.humidity??'--'}%",
+                      "${weather?.humidity ?? '--'}%",
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
@@ -63,7 +66,7 @@ class StatusCard extends StatelessWidget {
                       size: 40,
                     ),
                     Text(
-                      " ${weather?.windSpeed??'--'} km/h" ,
+                      " ${weather?.windSpeed ?? '--'} km/h",
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
@@ -87,7 +90,7 @@ class StatusCard extends StatelessWidget {
                       size: 40,
                     ),
                     Text(
-                      "${weather?.tempMax??'--'}°/${weather?.tempMin??'--'}°",
+                      "${weather?.tempMax ?? '--'}°/${weather?.tempMin ?? '--'}°",
                       style: const TextStyle(
                         color: Colors.white,
                         fontSize: 14,
@@ -108,5 +111,21 @@ class StatusCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  //Method to change the Container color based on the Weather Name
+  Color getContainerColor(String? weatherName) {
+    switch (weatherName) {
+      case 'sunny':
+        return ColorManager.sunny.withOpacity(0.5);
+      case 'cloudy':
+        return ColorManager.cloudy.withOpacity(0.5);
+      case 'rainy':
+        return ColorManager.rainy.withOpacity(0.5);
+      case 'snowy':
+        return ColorManager.snowy.withOpacity(0.5);
+      default:
+        return ColorManager.cloudy.withOpacity(0.5);
+    }
   }
 }

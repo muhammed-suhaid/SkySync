@@ -51,7 +51,10 @@ class _WeatherPageState extends State<WeatherPage> {
                       stateName: _stateName,
                       weatherName: _weatherName,
                     ),
-                    StatusCard(weather: _weather),
+                    StatusCard(
+                      weather: _weather,
+                      weatherName: _weatherName,
+                    ),
                     WeatherMessage(weather: _weather),
                   ],
                 ),
