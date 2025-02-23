@@ -18,9 +18,9 @@ class WeatherService {
     } else {
       return null;
     }
-  }
+  } 
 
-  Future<String> getCurrentCity() async {
+  Future<dynamic> getCurrentPlacemark() async {
     //get the location permission from user
     LocationPermission permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.denied) {
@@ -35,9 +35,6 @@ class WeatherService {
     List<Placemark> placemark =
         await placemarkFromCoordinates(position.latitude, position.longitude);
 
-    //extract the city name from the first placemark
-    String? city = placemark[1].locality;
-
-    return city ?? '';
+    return placemark;
   }
 }

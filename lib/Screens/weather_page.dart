@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:skysync/components/status_card.dart';
 import 'package:skysync/components/my_snackbar.dart';
 import 'package:skysync/components/weather_card.dart.dart';
@@ -21,10 +22,13 @@ class _WeatherPageState extends State<WeatherPage> {
   // Fetch weather
   Future<void> _fetchWeather() async {
     try {
-      String cityName = await _weatherService.getCurrentCity();
-      debugPrint(cityName);
+      List<Placemark> placemark = await _weatherService.getCurrentPlacemark();
+      String? cityName=placemark[1].locality;
+      String? stateName=placemark[1].administrativeArea;
+      debugPrint("City = $cityName");
+      debugPrint("State = $stateName");
 
-      final weather = await _weatherService.getWeather(cityName);
+      final weather = await _weatherService.getWeather(cityName??'');
 
       if (weather != null) {
         setState(() {
