@@ -41,7 +41,7 @@ class WeatherCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Icon(
-                Icons.wb_sunny,
+                getIcon(weatherName),
                 color: getTextColor(weatherName),
                 size: 50,
               ),
@@ -124,6 +124,21 @@ class WeatherCard extends StatelessWidget {
         return ColorManager.snowy;
       default:
         return ColorManager.cloudy;
+    }
+  }
+  //Method to change the Icon based on the Weather Name
+  IconData getIcon(String? weatherName) {
+    switch (weatherName) {
+      case 'sunny':
+        return Icons.wb_sunny_rounded;
+      case 'cloudy':
+        return Icons.wb_cloudy;
+      case 'rainy':
+        return Icons.thunderstorm;
+      case 'snowy':
+        return Icons.snowing;
+      default:
+        return Icons.wb_cloudy;
     }
   }
 
