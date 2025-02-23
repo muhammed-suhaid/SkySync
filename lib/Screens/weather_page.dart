@@ -19,6 +19,95 @@ class _WeatherPageState extends State<WeatherPage> {
   final _weatherService = WeatherService();
   Weather? _weather;
   String? _stateName;
+  String? _climate;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchWeather();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              getBackgroundImage(_climate),
+              fit: BoxFit.cover,
+              alignment: Alignment.center,
+            ),
+          ),
+          RefreshIndicator(
+            onRefresh: _fetchWeather,
+            child: ListView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              children: [
+                Column(
+                  children: [
+                    WeatherCard(
+                      weather: _weather,
+                      stateName: _stateName,
+                    ),
+                    StatusCard(weather: _weather),
+                    WeatherMessage(weather: _weather),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String getBackgroundImage(String? climate) {
+    switch (climate) {
+      case 'sunny':
+        return ImageAssets.sunny;
+      case 'cloudy':
+        return ImageAssets.cloudy;
+      case 'rainy':
+        return ImageAssets.rainy;
+      case 'snowy':
+        return ImageAssets.snowy;
+      default:
+        return ImageAssets.cloudy;
+    }
+  }
+
+// method for getting the climate based on the main condition
+  String getClimate(String? mainCondition) {
+    String climate = 'cloudy';
+    if (mainCondition != null) {
+      switch (mainCondition.toLowerCase()) {
+        case 'clear':
+          return 'sunny';
+        case 'clouds':
+        case 'mist':
+        case 'fog':
+        case 'smoke':
+        case 'haze':
+        case 'dust':
+        case 'sand':
+        case 'ash':
+          return 'cloudy';
+        case 'drizzle':
+        case 'rain':
+        case 'shower rain':
+        case 'thunderstorm':
+          return 'rainy';
+        case 'snow':
+        case 'sleet':
+        case 'blizzard':
+          return 'snowy';
+        default:
+          return 'cloudy';
+      }
+    }
+    return climate;
+  }
 
   // Fetch weather
   Future<void> _fetchWeather() async {
@@ -30,11 +119,14 @@ class _WeatherPageState extends State<WeatherPage> {
       debugPrint("State = $stateName");
 
       final weather = await _weatherService.getWeather(cityName ?? '');
+      final climate = getClimate(weather?.mainCondition);
+      debugPrint("Climate = $climate");
 
       if (weather != null) {
         setState(() {
           _weather = weather;
-          _stateName=stateName;
+          _stateName = stateName;
+          _climate = climate;
           debugPrint(_weather.toString());
           MySnackbar.show(context, 'Weather updated successfully!',
               isError: false);
@@ -62,46 +154,5 @@ class _WeatherPageState extends State<WeatherPage> {
     debugPrint("sunset = ${_weather?.sunset}");
     debugPrint("humidity = ${_weather?.humidity}");
     debugPrint("wind speed = ${_weather?.windSpeed}");
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _fetchWeather();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          Positioned.fill(
-            child: Image.asset(
-              ImageAssets.sunny,
-              fit: BoxFit.cover,
-              alignment: Alignment.center,
-            ),
-          ),
-          RefreshIndicator(
-            onRefresh: _fetchWeather,
-            child: ListView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              children: [
-                Column(
-                  children: [
-                    WeatherCard(
-                      weather: _weather,
-                      stateName: _stateName,
-                    ),
-                    StatusCard(weather: _weather),
-                     WeatherMessage(weather: _weather),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }
