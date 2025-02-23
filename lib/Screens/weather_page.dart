@@ -51,6 +51,15 @@ class _WeatherPageState extends State<WeatherPage> {
         MySnackbar.show(context, 'Something went wrong. Please try again.');
       });
     }
+    debugPrint("city name = ${_weather?.cityName}");
+    debugPrint("temperature = ${_weather?.temperature}");
+    debugPrint("High/Low = ${_weather?.tempMax}/${_weather?.tempMin}");
+    debugPrint("feels like = ${_weather?.feelsLike}");
+    debugPrint("main condition = ${_weather?.mainCondition}");
+    debugPrint("date = ${_weather?.date}");
+    debugPrint("sunset = ${_weather?.sunset}");
+    debugPrint("humidity = ${_weather?.humidity}");
+    debugPrint("wind speed = ${_weather?.windSpeed}");
   }
 
   @override
