@@ -32,53 +32,57 @@ class _WeatherPageState extends State<WeatherPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          if (_isLoading) ...[
-            Positioned.fill(
-              child: Container(
+      body: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 500),
+        transitionBuilder: (Widget child, Animation<double> animation) {
+          return FadeTransition(opacity: animation, child: child);
+        },
+        child: _isLoading
+            ? Container(
+                key: const ValueKey(1),
                 color: Colors.black.withOpacity(0.8),
                 child: Center(
                   child: Lottie.asset(
                     AnimationAssets.loading,
                     width: 400,
-                    height: 400,                   
+                    height: 400,
                   ),
                 ),
-              ),
-            ),
-          ] else ...[
-            Positioned.fill(
-              child: Image.asset(
-                getBackgroundImage(_weatherName),
-                fit: BoxFit.cover,
-                alignment: Alignment.center,
-              ),
-            ),
-            RefreshIndicator(
-              onRefresh: _fetchWeather,
-              child: ListView(
-                physics: const AlwaysScrollableScrollPhysics(),
+              )
+            : Stack(
+                key: const ValueKey(2),
                 children: [
-                  Column(
-                    children: [
-                      WeatherCard(
-                        weather: _weather,
-                        stateName: _stateName,
-                        weatherName: _weatherName,
-                      ),
-                      StatusCard(
-                        weather: _weather,
-                        weatherName: _weatherName,
-                      ),
-                      WeatherMessage(weather: _weather),
-                    ],
+                  Positioned.fill(
+                    child: Image.asset(
+                      getBackgroundImage(_weatherName),
+                      fit: BoxFit.cover,
+                      alignment: Alignment.center,
+                    ),
+                  ),
+                  RefreshIndicator(
+                    onRefresh: _fetchWeather,
+                    child: ListView(
+                      physics: const AlwaysScrollableScrollPhysics(),
+                      children: [
+                        Column(
+                          children: [
+                            WeatherCard(
+                              weather: _weather,
+                              stateName: _stateName,
+                              weatherName: _weatherName,
+                            ),
+                            StatusCard(
+                              weather: _weather,
+                              weatherName: _weatherName,
+                            ),
+                            WeatherMessage(weather: _weather),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),
-            ),
-          ]
-        ],
       ),
     );
   }
@@ -132,6 +136,9 @@ class _WeatherPageState extends State<WeatherPage> {
 
   // Fetch weather
   Future<void> _fetchWeather() async {
+    setState(() {
+      _isLoading = true;
+    });
     try {
       List<Placemark> placemark = await _weatherService.getCurrentPlacemark();
       String? cityName = placemark[1].locality;
@@ -156,9 +163,9 @@ class _WeatherPageState extends State<WeatherPage> {
       } else {
         setState(() {
           _weather = null;
-          _isLoading = false;
           debugPrint('City not found. Please try again.');
-          // MySnackbar.show(context, 'City not found. Please try again.');
+          MySnackbar.show(context, 'City not found. Fetching weather again...');
+          _fetchWeather();
         });
       }
     } catch (e) {
@@ -166,6 +173,7 @@ class _WeatherPageState extends State<WeatherPage> {
         _weather = null;
         debugPrint('Something went wrong. Please try again.');
         MySnackbar.show(context, 'Something went wrong. Please try again.');
+        _fetchWeather();
       });
     }
     debugPrint("city name = ${_weather?.cityName}");
