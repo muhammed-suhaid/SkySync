@@ -26,16 +26,21 @@ class Weather {
   factory Weather.fromJson(Map<String, dynamic> json) {
     return Weather(
       cityName: json['name'],
-      temperature: json['main']['temp'].toDouble().toInt(),
-      feelsLike: json['main']['feels_like'].toDouble().toInt(),
+      temperature: _kelvinToCelsius(json['main']['temp']),
+      feelsLike: _kelvinToCelsius(json['main']['feels_like']),
       mainCondition: json['weather'][0]['main'],
       date: _formatDate(json['dt']),
       sunset: _formatDate(json['sys']['sunset']),
       humidity: json['main']['humidity'],
       windSpeed: json['wind']['speed'].toDouble(),
-      tempMax: json['main']['temp_max'].toDouble().toInt(),
-      tempMin: json['main']['temp_min'].toDouble().toInt(),
+      tempMax: _kelvinToCelsius(json['main']['temp_max']),
+      tempMin: _kelvinToCelsius(json['main']['temp_min']), 
     );
+  }
+
+  // Convert Kelvin to Celsius
+  static int _kelvinToCelsius(double kelvin) {
+    return (kelvin - 273.15).toInt();
   }
 
   //function to format Unix timestamp into a readable date
