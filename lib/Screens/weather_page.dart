@@ -20,7 +20,7 @@ class WeatherPage extends StatefulWidget {
 class _WeatherPageState extends State<WeatherPage> {
   final _weatherService = WeatherService();
   Weather? _weather;
-  String? _stateName;
+  String? _location;
   String? _weatherName;
   bool _isLoading = true;
 
@@ -69,7 +69,7 @@ class _WeatherPageState extends State<WeatherPage> {
                           children: [
                             WeatherCard(
                               weather: _weather,
-                              stateName: _stateName,
+                              location: _location,
                               weatherName: _weatherName,
                             ),
                             StatusCard(
@@ -155,8 +155,8 @@ class _WeatherPageState extends State<WeatherPage> {
 
       List<Placemark> placemark =
           await placemarkFromCoordinates(position.latitude, position.longitude);
-      String? cityName = placemark[2].locality;
-      debugPrint("City = $cityName");
+      String? location = placemark[2].locality;
+      debugPrint("City = $location");
 
       final weather = await _weatherService.getWeather(latitude, longitude);
       final weatherName = getWeatherName(weather?.mainCondition);
@@ -165,7 +165,7 @@ class _WeatherPageState extends State<WeatherPage> {
       if (weather != null) {
         setState(() {
           _weather = weather;
-          _stateName = cityName;
+          _location = location;
           _weatherName = weatherName;
           _isLoading = false;
           debugPrint(_weather.toString());

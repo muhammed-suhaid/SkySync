@@ -5,13 +5,13 @@ import 'package:skysync/resources/color_manager.dart';
 
 class WeatherCard extends StatelessWidget {
   final Weather? weather;
-  final String? stateName;
+  final String? location;
   final String? weatherName;
 
   const WeatherCard({
     super.key,
     required this.weather,
-    required this.stateName,
+    required this.location,
     required this.weatherName,
   });
 
@@ -66,7 +66,9 @@ class WeatherCard extends StatelessWidget {
           ),
           const SizedBox(height: 20),
           Text(
-            '${weather?.cityName ?? '--'}, ${stateName ?? '--'}',
+            weather?.cityName != location
+                ? '${weather?.cityName ?? '--'}, ${location ?? '--'}'
+                : weather?.cityName ?? '--',
             style: TextStyle(
               color: getTextColor(weatherName),
               fontSize: 14,
@@ -126,6 +128,7 @@ class WeatherCard extends StatelessWidget {
         return ColorManager.cloudy;
     }
   }
+
   //Method to change the Icon based on the Weather Name
   IconData getIcon(String? weatherName) {
     switch (weatherName) {
