@@ -23,7 +23,7 @@ class StatusCard extends StatelessWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
           child: Container(
-            height: 130,
+            // height: 130,
             // margin: const EdgeInsets.symmetric(horizontal: 50),
             padding: const EdgeInsets.all(20),
             decoration: BoxDecoration(

@@ -13,7 +13,7 @@ class WeatherMessage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bool nightTime = isNight(weather?.date);
     return Padding(
-      padding: const EdgeInsets.only(left: 50, top: 50, right: 50),
+      padding: const EdgeInsets.only(left: 50, top: 30, right: 50),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
