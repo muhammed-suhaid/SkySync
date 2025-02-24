@@ -1,15 +1,16 @@
 import 'dart:convert';
 
-import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:skysync/models/weather_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:skysync/resources/url_paths.dart';
 
 class WeatherService {
-  Future<Weather?> getWeather(String cityName) async {
+  Future<Weather?> getWeather(String lattitude,String longitude) async {
+    // String url =
+    //     '${AppUrl.baseUrl}?q=$cityName&appid=${AppUrl.apiKey}&units=metric';
     String url =
-        '${AppUrl.baseUrl}?q=$cityName&appid=${AppUrl.apiKey}&units=metric';
+        '${AppUrl.baseUrl}?lat=$lattitude&lon=$longitude&appid=${AppUrl.apiKey}';
     final response = await http.get(Uri.parse(url));
     final data = jsonDecode(response.body);
 
@@ -32,9 +33,10 @@ class WeatherService {
         desiredAccuracy: LocationAccuracy.high);
 
     //convert the location into a list of placemark objects
-    List<Placemark> placemark =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
-
-    return placemark;
+    // List<Placemark> placemark =
+    //     await placemarkFromCoordinates(position.latitude, position.longitude);
+    
+    // return placemark;
+    return position;
   }
 }

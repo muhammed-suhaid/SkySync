@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:lottie/lottie.dart';
 import 'package:skysync/components/status_card.dart';
 import 'package:skysync/components/my_snackbar.dart';
@@ -140,20 +141,31 @@ class _WeatherPageState extends State<WeatherPage> {
       _isLoading = true;
     });
     try {
-      List<Placemark> placemark = await _weatherService.getCurrentPlacemark();
-      String? cityName = placemark[1].locality;
-      String? stateName = placemark[1].administrativeArea;
-      debugPrint("City = $cityName");
-      debugPrint("State = $stateName");
+      // List<Placemark> placemark = await _weatherService.getCurrentPlacemark();
+      // String? cityName = placemark[1].locality;
+      // String? stateName = placemark[1].administrativeArea;
+      // debugPrint("City = $cityName");
+      // debugPrint("State = $stateName");
 
-      final weather = await _weatherService.getWeather(cityName ?? '');
+      Position position = await _weatherService.getCurrentPlacemark();
+      String? latitude = position.latitude.toString();
+      String? longitude = position.longitude.toString();
+      debugPrint("Latitude = $latitude");
+      debugPrint("longitude = $longitude");
+
+      List<Placemark> placemark =
+          await placemarkFromCoordinates(position.latitude, position.longitude);
+      String? cityName = placemark[2].locality;
+      debugPrint("City = $cityName");
+
+      final weather = await _weatherService.getWeather(latitude, longitude);
       final weatherName = getWeatherName(weather?.mainCondition);
       debugPrint("weatherName = $weatherName");
 
       if (weather != null) {
         setState(() {
           _weather = weather;
-          _stateName = stateName;
+          _stateName = cityName;
           _weatherName = weatherName;
           _isLoading = false;
           debugPrint(_weather.toString());
