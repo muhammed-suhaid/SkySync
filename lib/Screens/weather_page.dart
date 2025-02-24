@@ -176,8 +176,7 @@ class _WeatherPageState extends State<WeatherPage> {
         setState(() {
           _weather = null;
           debugPrint('City not found. Please try again.');
-          MySnackbar.show(context, 'City not found. Fetching weather again...');
-          _fetchWeather();
+          MySnackbar.show(context, 'City not found. Please try again.');
         });
       }
     } catch (e) {
