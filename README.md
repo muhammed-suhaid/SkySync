@@ -12,8 +12,8 @@ SkySync is a weather app that automatically detects your location and provides r
    
 ### User Interface Screens :
 
-1. **Splash Screen** – Displays the app logo and loads weather data.
-2. **Home Screen** – Shows real-time weather details, including temperature, conditions, and forecasts.
+1. **Home Screen** – Shows real-time weather details, including temperature, conditions, and forecasts.
+2. **Loading Screen** – Displays an animated icon while fetching the latest weather data.
 
 
 ### Technology Stack :
@@ -22,6 +22,7 @@ SkySync is a weather app that automatically detects your location and provides r
 - Geolocator Package – Fetches user’s real-time latitude and longitude.
 - HTTP Package – Retrieves weather data from OpenWeatherMap API.
 - OpenWeatherMap API – Provides real-time and forecast weather data.
+- lottie Package - Displays smooth and lightweight animated weather icons.
 
 
 
