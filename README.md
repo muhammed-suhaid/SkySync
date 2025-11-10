@@ -27,3 +27,7 @@ SkySync is a weather app that automatically detects your location and provides r
 
 
 
+Figma : https://www.figma.com/community/file/1177627357046864157/weather-app-template
+
+https://github.com/user-attachments/assets/27223fb1-c2de-4b74-ac6e-1ba582a34dfa
+
